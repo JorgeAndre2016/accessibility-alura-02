@@ -1,10 +1,13 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { ModalRef, ModalService } from './shared/components/modal/services/modal.service';
+import { ModalService } from './shared/components/modal/services/modal.service';
+import { fade } from './shared/animations/fade';
+import { ModalRef } from './shared/components/modal/models/modal-ref';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [fade]
 })
 export class AppComponent {
   @ViewChild('Modal') public modalTemplateRef: TemplateRef<any>;
@@ -16,6 +19,7 @@ export class AppComponent {
   title = 'a11y-p2';
   public firstName = "Jorge";
   public modalRef: ModalRef;
+  public info = false;
 
   constructor(
     private modalService: ModalService

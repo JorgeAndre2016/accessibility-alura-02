@@ -7,13 +7,13 @@ export const fade = trigger(
             ':enter',
             [
                 style({ opacity: 0 }),
-                animate(250, style({ opacity: 1 }))
+                animate(150, style({ opacity: 1 }))
             ]
         ),
         transition(
             ':leave',
             [
-                animate(250, style({ opacity: 0 }))
+                animate(150, style({ opacity: 0 }))
             ]
         ),
     ]

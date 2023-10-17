@@ -1,7 +1,8 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ModalService } from './shared/components/modal/services/modal.service';
 import { fade } from './shared/animations/fade';
 import { ModalRef } from './shared/components/modal/models/modal-ref';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { ModalRef } from './shared/components/modal/models/modal-ref';
   styleUrls: ['./app.component.scss'],
   animations: [fade]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild('Modal') public modalTemplateRef: TemplateRef<any>;
 
   // @ViewChild('template1') public template1: TemplateRef<any>;
@@ -20,11 +21,22 @@ export class AppComponent {
   public firstName = "Jorge";
   public modalRef: ModalRef;
   public info = false;
+  public form: FormGroup;
 
   constructor(
-    private modalService: ModalService
+    private modalService: ModalService,
+    private formBuilder: FormBuilder
     // private cd: ChangeDetectorRef
   ) { }
+
+  public ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      firstName: ['Jorge', Validators.required],
+      surname: ['', Validators.required],
+      age: ['', Validators.required],
+      info: [false]
+    });
+  }
 
   // public ngAfterViewInit(): void {
     // this.selectedTemplate = this.template1;
@@ -37,5 +49,15 @@ export class AppComponent {
       templateRef: this.modalTemplateRef,
       title: 'User Details'
     });
+  }
+
+  public submit(): void {
+
+    if (this.form.invalid) {
+      return;
+    }
+    
+    console.log(this.form.value);
+    this.modalRef.close();
   }
 }
